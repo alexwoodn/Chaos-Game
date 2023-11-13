@@ -16,6 +16,14 @@ int main()
 	// Create and open a window for the game
 	RenderWindow window(vm, "Timber Game!!", Style::Default);
 
+	Text instructionText;
+	instructionText.setFont(font);
+	instructionText.setCharacterSize(20);
+	instructionText.setFillColor(Color::White);
+	instructionText.setPosition(10, 10);
+	instructionText.setString("Click on any three points to create the vertices for the triangle.\n"
+                               "Click on a fourth point to start the algorithm.");
+
     vector<Vector2f> vertices;
     vector<Vector2f> points;
 
@@ -50,6 +58,7 @@ int main()
                     {
                         ///fourth click
                         ///push back to points vector
+			points.push_back(Vector2f(event.mouseButton.x, event.mouseButton.y));
                     }
                 }
             }
@@ -70,6 +79,10 @@ int main()
             ///select random vertex
             ///calculate midpoint between random vertex and the last point in the vector
             ///push back the newly generated coord.
+		Vector2f randomVertex = vertices[rand() % 3];
+            Vector2f lastPoint = points.back();
+            Vector2f midpoint = (randomVertex + lastPoint) / 2.0f;
+            points.push_back(midpoint);
         }
 
         /*
